@@ -50,7 +50,6 @@ class ProductController {
                 res.status(403).json({
                     status: "failed",
                     message: `${name} has already exists!`,
-                    data: duplicate,
                 });
             } else {
                 if (req.file) {

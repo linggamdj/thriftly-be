@@ -9,8 +9,8 @@ userRoute.post("/register", UserController.register);
 userRoute.get("/detail", auth, UserController.getUserDetail);
 userRoute.put(
     "/update",
-    upload.single("profile_picture"),
     auth,
+    upload.single("profile_picture"),
     UserController.update
 );
 userRoute.put("/password", auth, UserController.updatePassword);

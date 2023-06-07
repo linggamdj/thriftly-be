@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const { product } = require("../models");
 
 class ProductController {
@@ -50,7 +51,6 @@ class ProductController {
                 res.status(403).json({
                     status: "failed",
                     message: `${name} has already exists!`,
-                    data: duplicate,
                 });
             } else {
                 if (req.file) {
@@ -145,6 +145,31 @@ class ProductController {
                       status: "failed",
                       message: `Id ${id} not found.`,
                   });
+        } catch (err) {
+            res.status(500).json({
+                status: "failed",
+                message: String(err),
+            });
+        }
+    }
+
+    static async search(req, res) {
+        try {
+            const query = req.params.query.toLowerCase();
+
+            const result = await product.findAll({
+                where: {
+                    name: {
+                        [Op.like]: `%${query}%`,
+                    },
+                },
+            });
+
+            res.status(200).json({
+                status: "success",
+                message: "Products filtered",
+                data: result,
+            });
         } catch (err) {
             res.status(500).json({
                 status: "failed",

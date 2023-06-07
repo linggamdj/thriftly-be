@@ -6,6 +6,7 @@ const upload = multer({ storage: storage });
 
 productRoute.get("/", auth, ProductController.getProducts);
 productRoute.get("/:id", auth, ProductController.getProductById);
+productRoute.get("/search/:query", auth, ProductController.search);
 productRoute.post(
     "/create",
     auth,
